@@ -31,7 +31,7 @@ content=$(find . -type f \( \
 )
 
 # The identifiers above will be replaced in the path of the files and directories found here
-paths=$(find . -depth 2 \( \
+paths=$(find . -maxdepth 2 \( \
   -path "./lib/${snakeCaseBefore}" -or \
   -path "./lib/${snakeCaseBefore}_*" -or \
   -path "./test/${snakeCaseBefore}" -or \
@@ -85,9 +85,9 @@ echo ""
 
 header "Replacing boilerplate identifiers in content"
 for file in $content; do
-  run /usr/bin/sed -i "''" "s/$snakeCaseBefore/$snakeCaseAfter/g" $file
-  run /usr/bin/sed -i "''" "s/$kebabCaseBefore/$kebabCaseAfter/g" $file
-  run /usr/bin/sed -i "''" "s/$pascalCaseBefore/$pascalCaseAfter/g" $file
+  run /usr/bin/sed -i "s/$snakeCaseBefore/$snakeCaseAfter/g" $file
+  run /usr/bin/sed -i "s/$kebabCaseBefore/$kebabCaseAfter/g" $file
+  run /usr/bin/sed -i "s/$pascalCaseBefore/$pascalCaseAfter/g" $file
 done
 success "Done!\n"
 
@@ -121,5 +121,5 @@ run rm -fr CODE_OF_CONDUCT.md CONTRIBUTING.md
 success "Done!\n"
 
 header "Removing boilerplate setup script"
-run rm -fr boilerplate-setup.sh
+# run rm -fr boilerplate-setup.sh
 success "Done!\n"
